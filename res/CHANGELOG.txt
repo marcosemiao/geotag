@@ -1,0 +1,460 @@
+Release 0.099
+  Fixed a clipboard issue
+  
+Release 0.098
+  Fixed some packaging issues
+  
+Release 0.097
+  Disabled map tilt in Google maps
+  
+Release 0.096
+  Added Italian translation by Angelo Giammarresi
+
+Release 0.095
+  Added Swedish translation by Per-Erik Johansson
+  
+Release 0.094
+  Added Greek translation by geogeo.gr
+  
+Release 0.093
+  Added a description column to allow direct editing of EXIF user comment
+  Icon in KML/KMZ export now configurable.
+  Optional header/footer fields for KML/KMZ export. Use at own risk.
+  Updated copyright notices in all source files.
+  
+Release 0.092
+  Fixed deployment problems
+  
+Release 0.091
+  The geonames.org API had changed slightly.
+
+Release 0.090
+  Removed references to Google Maps API version 2 as it is now obsolete
+  
+Release 0.089
+  Almost complete rewrite of the Google Maps functionality.
+  Google Maps will switch off version 2 of their API on Nov 19, 2013
+  and Version 3 of the API is very different, so I expect problems.
+  Mouse wheel zoom is now enabled by default in Google maps and the
+  option to turn it on/off has been removed. In case of problems, please let
+  me know early.
+  
+Release 0.088
+  Removed warning due to new Java 7 security settings
+  
+Release 0.087
+  New Russian translation by Анатолий Стреж
+  
+Release 0.086
+  Fixed problem with Java 6
+
+Release 0.085
+  Removed several compile warnings.
+  Fixed problems with Java 7.
+
+Release 0.084
+  Release 0.083 failed due to unsigned jar.
+  Re-releasing. Added jar signature verification
+  to release process. 
+  
+Release 0.083
+  New Spanish translation by Carlos Pomares Quintero.
+  New Polish translation by Pawel Krafczyk
+  
+Release 0.082
+  Release 0.081 failed due to unsigned
+  jar. Re-releasing
+  
+Release 0.081
+  Added support for Samsung SRW files
+  New Czech translation by Ales Zeleny
+  
+Release 0.080
+  Fixed problem reading images tagged by
+  Adobe Lightroom (Apparently they save
+  latitude/longitude as zero divided by zero.)
+
+Release 0.079
+  Fixed bug 3241411:
+  Negative altitude got saved as positive
+  
+Release 0.078
+  Added Flattr button. Maybe I can finance my 
+  Flattr habit
+  
+Release 0.077
+  New Brazilian Portuguese translation by 
+  Alexandre C. Leite
+   
+Release 0.076
+  Fixed ClassLoader problems with Java Web Start
+  
+Release 0.075
+  New Dutch translation by T Verhoef
+  
+Release 0.074
+  No longer changing default Locale when explicitly
+  using a .po file specified on the command line.
+  Fixed problem with undefined tags (Nikon P6000)
+  Updated Danish translation
+  
+Release 0.073
+  Fixed a problem with .po files being opened with
+  the wrong charset on Windows.
+  Added automatic generation of comments in .po files
+  to help translators.
+  
+Release 0.072
+  Fixed missing translation of Javascript text.
+  Google Earth path is now configurable for Linux
+  
+Release 0.071
+  Geotag now uses GNU gettext po files for 
+  translations. Major change under the bonnet
+  that hopefully will go unnoticed.
+  Support for Nokon NRW files.
+
+Release 0.070
+  Fixed image view problem for images damaged by
+  Google's Picasa.
+  
+Release 0.069
+  Added option not to keep backups when writing
+  Exif data.
+  Fixed Javascript problems with French translation
+  
+Release 0.068
+  New French translation by Frédéric Darboux added.
+  
+Release 0.067
+  Fixed a problem find locations for a single image
+  
+Release 0.066
+  Fixed problem with directions not being saved
+  in XMP files
+  Now remembers last file filter used.
+  Replaced "->" with proper Unicode right arrow
+  character where displayed.
+  Based on patched submitted by Dominic Battre:
+  Fixed problems with deleting location information.
+  Improved file chooser dialog.
+  Fixed timezone problems in the date/time chooser
+  dialog.
+  
+Release 0.065
+  Fixed problem with altitudes in feet
+  Now signing jar with new key - old one was
+  about to expire soon.
+  
+Release 0.064
+  Fixed compilation problem with OpenJDK
+  
+Release 0.063
+  Workaround for bug 6880336 in Java 1.6.0_18
+
+Release 0.062
+  [2826751] Added support for Panasonic RW2 files, if
+  exiftool version >= 7.73 is installed
+  [2826752] Add support for XMP files as images
+  
+Release 0.061
+  [2825930] Support for IPTC:Sub-Location
+  
+Release 0.060
+  [2820048] Geotag now always shows the 'What next' dialog
+  if exiftool is not found on startup.
+  [2817511] Geotag claims success when exiftool fails.
+  [2810269] Loading GPX file should show progress
+  Code cleanup
+
+Release 0.059
+  Fixed bug [2039352]:
+  When alt is set to feet location copies turn to meters
+  Fixed bug [2020068]:
+  geotagging fails for GPX data without <ele> tags
+
+Release 0.058
+  Overlooked one place where [2648519] wasn't fixed.
+  
+Release 0.057
+  Fixed [2648519] Need to be able to specify
+  arguments containing spaces
+  Updated copyright message.
+  
+Release 0.056
+  The geonames.org is now a user setting.
+  this resolves problem [2535122]
+
+Release 0.055
+  Improved Webstart file.
+  
+Release 0.054
+  Geotag now has its own icon!
+  Geotag application icon produced by Bruce McKenzie
+  with input from David Hall, icerabbit 
+  and Andreas Schneider.
+  Further preparations for the translation tool.
+  Fixed bug [1999376]: Track points without time stamps
+  
+Release 0.053
+  Impoved KML export (Jason Winnebeck)
+  Thumbnail size now configurable (Jason Winnebeck)
+  Click count for manual edits now configurable.
+  Altitudes can now be retrieved from geonames.org.
+  Preparations for a built-in translation tool.
+
+Release 0.052
+  Fixed bug [1955019]: can't save empty location
+  Fixed bug [1892267]: Broken Manually Editing Altitude
+  
+Release 0.051 (Alice Springs Edition)
+  Now supporting time zones that don't have a whole number
+  offset from GMT (like Alice Springs).
+
+Release 0.050
+  Speed up for loading images on Windows. Linux should not
+  be affected. Any feedback (better/worse/unchanged) is
+  welcome.
+
+Release 0.049
+  Menu items that only make sense for multiple images
+  are no longer displayed on Google maps if only a single
+  image is shown.
+  Updated Danish translation
+
+Release 0.048
+  Images can now be removed from the images table. Note
+  that this will not delete the images, but just remove 
+  them from view.
+  CRW files can now be geotagged (using XMP files only)
+  Fixed bug [1865891]:
+  "copy location name" function not copying "city" field
+  Added workaround for Java/Swing bug preventing table
+  columns to be moved properly. 
+
+2008-01-01 Release 0.047
+  Fixed bug generating KMZ files under Windows.
+  
+2007-12-30 Release 0.046
+  Added Danish translation by Uffe Ougaard.
+  
+2007-12-29 Release 0.045
+  Bug fix 1860333: XMP:GPSTimeStamp error message
+
+2007-12-26 Release 0.044
+  Added support for reading GPX 1.1 files.
+  
+2007-12-05 Release 0.043
+  Coordinates can now be set by copying them to the
+  clipboard from any external application.
+  
+2007-12-01 Release 0.042
+  Fixed bug when reading XMP files with location names, but
+  no coordinates.
+  Fixed bug reading geonames information with non-English
+  query language.
+  
+2007-11-25 Release 0.041
+  The geonames.org query language can now be overridden
+  in the settings dialog, to stop Norwegian users
+  getting place names in German only.
+  
+2007-11-20 Release 0.040
+  Fixed problems with reading multiple GPX files.
+  
+2007-11-18 Release 0.039
+  Geonames.org queries now use the correct language.
+  Major code cleanup.
+  Added support for proxies.
+  For reverse geocoding there is now a difference 
+  between locations and cities.
+  
+2007-11-10 Release 0.038
+  Now displaying alternative location names.
+  Now using the geonames findNearby query instead of
+  findNearbyPlaceNames, resulting in more location names
+  being returned, not only populated places.
+  
+2007-11-07 Release 0.037
+  Altitude, latitude and longitude can now be
+  manually edited.
+  There are now several display formats to choose from
+  for displaying latitudes and longitudes. 
+  The altitude can now displayed in feet as well
+  as in metres.
+
+2007-11-03 Release 0.36
+  Added keyboard navigation with arrow keys
+
+2007-11-02 Release 0.35
+  Right clicking on the image preview now opens the
+  popup menu for that image.
+  Search radius for reverse geocoding can now be
+  specified in kilometers/kilometres or miles.
+  Added 3rd supported language: British English ;-)
+  General cleanup and minor fixes.
+
+2007-10-30 Release 0.34
+  Added ability to change location name to another
+  location found nearby. This also includes names from
+  Wikipedia entries.
+  Added ability to manually edit place names and to copy
+  them to other images.
+  
+2007-10-28 Release 0.33
+  Added reverse geocoding with geonames.org
+  The Edit menu now contains menu items to select
+  all images, images with locations or images with
+  new locations.
+  It is now possible to display nearby Wikipedia
+  entries on the Google Map.
+  Display of thumbnail images in tooltips can
+  now be turned off for better performance.
+  
+2007-10-22 Release 0.032
+  Added export to Google Earth KML/KMZ files.
+  Redesign of the Settings dialog.
+  
+2007-10-17 Release 0.031
+  More big speed increase for matching tracks.
+  The 'Show tracks on Google Maps' setting has been
+  removed from the Settings dialog and added to the
+  menu on the Google Map.
+  
+2007-10-16 Release 0.030
+  Matching tracks to images is now almost 10 times
+  faster than before.
+  Now asks before overwriting GPX files.
+  Added keyboard shortcuts to the Google Maps menu
+  (Feature request 1809768)
+  
+2007-10-09 Release 0.029
+  Added drag-and-drop support for adding files.
+  Google Map menu open/closed state and scroll
+  wheel zoom status are now remembered.
+  Bug fixed: 1810081  
+  
+2007-10-08 Release 0.028
+  Added a menu to the Google Map to ease navigation
+  between several images on the map.
+  
+2007-10-07 Release 0.027
+  Fixed Javascript problem, resulting in thumbnail
+  images not being displayed.
+  Enabled scroll wheel zooming for Google Maps.
+  
+2007-10-01 Release 0.026
+  Geotag now works with Internet Explorer. Several
+  ugly work-arounds were needed to keep this weird
+  software happy. All other browsers were just fine.
+  
+2007-10-01 Release 0.025
+  As there are problems with Internet Explorer, a
+  setting for the browser path was added.
+  
+2007-09-30 Release 0.024
+  More than one image can now be opened on a
+  single Google Map.
+  Displaying tracks on Google maps is now either
+  on or off. The other choices didn't make sense
+  with more than one image displayed.
+  Image direction can now be edited manually, either
+  as an angle or a cardinal direction (e.g NNW).
+
+2007-09-28 Release 0.023
+  Added to ability to display and tag TIFF images.
+  New About dialog with working hyperlinks.
+  
+2007-09-24 Release 0.022
+  Now shows an error message if a GPX file could
+  not be read.
+  Added a 'Geotag web site' item to the Help menu
+
+2007-09-20 Release 0.021
+  Checking available memory on start-up and issuing
+  a warning if it's not enough.
+  Temporary files are now deleted on exit.
+  
+2007-09-19 Release 0.020
+  Bug fix release: Fixed problem with image direction
+  when using with Google Earth
+  
+2007-09-18 Release 0.019
+  Images without coordinates will not automatically accept
+  the default coordinates when shown in Google Earth.
+  
+2007-09-17 Release 0.018
+  Added check for a new version on program start-up.
+  This can be turned off in the Settings dialog.
+  
+2007-09-17 Release 0.017
+  Mainly a bug fix/usability release.
+  Main difference: When showing an image without coordinates
+  in Google Maps, the last displayed coordinates at a lower 
+  zoom level are now displayed (assuming the image is in the
+  same general area as the previous one)
+  
+2007-09-13 Release 0.016
+  Now can set the image direction with Google Maps.
+  Now can handle displaying all tracks on a Google map.
+  Done by not sending points to the maps are are so close
+  in the track, that they make no visual difference.
+  Now reporting back and remembering changes in map type in Google maps
+  
+2007-09-09 Release 0.015
+  Added ability to display GPS tracks on Google Maps.
+  The last selected Google Maps zoom level is now reported back
+  to Geotag and used for the next image opened in the browser.
+  
+2007-09-07 Release 0.014
+  Added possibility to specify additional exiftool arguments.
+  
+2007-09-07 Release 0.013
+  The column headers now have tool tips.  
+  Column widths are now saved as preferences.
+  Column positions are now saved as preferences.
+  The table font can now be changed.
+  
+2007-09-05 Release 0.012
+  Added handling of PPM thumbnail images.
+  
+2007-09-04 Release 0.011
+  Added support for the following RAW file formats:
+  ARW, DCR, RAF, SR2, SRF, X3F. Exiftool can only read those files,
+  so locations are automatically stored in XMP sidecar files.
+  
+2007-09-04 Release 0.010
+  Added support for XMP sidecar files
+  
+2007-09-03 Release 0.009
+  Added support for dcraw external program to display RAW images
+  
+2007-09-02 Release 0.008
+  Added support for .thm files (instead of .crw files which
+  can't have EXIF data written to them).
+  
+2007-09-02 Release 0.007  
+  Fixed bug with null altitudes.
+  Now writing stdout/stderr to log file
+  
+2007-09-02 Release 0.006
+  Added support for the following RAW file formats:
+  CR2, DNG, ERF, MEF, MRW, NEF, ORF, PEF, RAW
+  Images are now sorted by GMT time stamp rather than by name
+  
+2007-09-01 Release 0.005
+  Messed up version information - had to re-release
+  
+2007-09-01 Release 0.004
+  Added support for Google Earth
+  
+2007-08-31 Release 0.003
+  Added support for GPSBabel
+  Added possibility to save .gpx files
+  Better behaviour if exiftool is not properly configured
+  
+2007-08-30 Release 0.002
+  Added settings dialog and made the path to exiftool configurable
+
+2007-08-29 Release 0.001
+  initial release
