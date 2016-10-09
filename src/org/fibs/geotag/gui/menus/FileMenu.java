@@ -21,6 +21,8 @@ package org.fibs.geotag.gui.menus;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -295,10 +297,13 @@ public class FileMenu extends JMenu implements MenuConstants {
       Settings.flush();
       ImageFileFilter filter = (ImageFileFilter) chooser.getFileFilter();
       ImageFileFilter.storeLastFilterUsed(filter);
-      File[] files = directory.listFiles(filter);
-      ExifReaderTask task = new ExifReaderTask(ADD_FILES, getTableModel(),
-          files);
-      TaskExecutor.execute(task);
+      try {
+        File[] files = Files.walk(directory.toPath()).filter(p -> filter.accept(p.toFile())).map(p -> p.toFile()).toArray(File[]::new);
+        ExifReaderTask task = new ExifReaderTask(ADD_FILES, getTableModel(), files);
+        TaskExecutor.execute(task);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 
