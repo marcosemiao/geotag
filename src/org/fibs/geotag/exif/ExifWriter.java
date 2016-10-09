@@ -100,6 +100,13 @@ public class ExifWriter {
    * @return True if the exiftool process was called successfully
    */
   private boolean write(ImageInfo imageInfo, boolean xmp) {
+	String charset = "UTF-8"; //$NON-NLS-1$
+	boolean osWindows = System.getProperty("os.name").toLowerCase().indexOf("win") >= 0; //$NON-NLS-1$ //$NON-NLS-2$
+	if (osWindows)
+	{
+		charset = "cp1252"; //$NON-NLS-1$
+	}
+	
     boolean success = false;
     // create a temporary file for the arguments
     File argumentsFile = null;
@@ -109,7 +116,8 @@ public class ExifWriter {
       argumentsFile = File.createTempFile("args", null); //$NON-NLS-1$
       argumentsFile.deleteOnExit();
       argumentsOutputStream = new FileOutputStream(argumentsFile);
-      argumentsWriter = new OutputStreamWriter(argumentsOutputStream, "UTF-8"); //$NON-NLS-1$
+      
+      argumentsWriter = new OutputStreamWriter(argumentsOutputStream, charset);
     } catch (IOException e) {
       e.printStackTrace();
       return false;
@@ -119,6 +127,9 @@ public class ExifWriter {
     // the command name
     String exiftool = Settings.get(SETTING.EXIFTOOL_PATH, "exiftool"); //$NON-NLS-1$
     command.add(exiftool);
+    if (osWindows) {
+      command.add("-L"); //$NON-NLS-1$
+    }
     command.add("-@"); //$NON-NLS-1$
     command.add(argumentsFile.getPath());
 
