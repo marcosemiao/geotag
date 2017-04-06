@@ -169,6 +169,7 @@ public class ExifWriter {
       e1.printStackTrace();
     }
 
+    System.out.println(command);
     ProcessBuilder processBuilder = new ProcessBuilder(command);
     try {
       Process process = processBuilder.redirectErrorStream(true).start();

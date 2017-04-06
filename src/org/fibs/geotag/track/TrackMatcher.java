@@ -30,79 +30,74 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.fibs.geotag.data.ImageInfo;
+import org.fibs.geotag.data.ImageInfo.DATA_SOURCE;
 import org.fibs.geotag.data.UpdateGPSAltitude;
 import org.fibs.geotag.data.UpdateGPSLatitude;
 import org.fibs.geotag.data.UpdateGPSLongitude;
-import org.fibs.geotag.data.ImageInfo.DATA_SOURCE;
 import org.fibs.geotag.util.Constants;
-import org.fibs.geotag.util.Util;
 import org.fibs.geotag.util.Units.ALTITUDE;
+import org.fibs.geotag.util.Util;
 
-import com.topografix.gpx._1._0.ObjectFactory;
 import com.topografix.gpx._1._0.Gpx.Trk.Trkseg;
 import com.topografix.gpx._1._0.Gpx.Trk.Trkseg.Trkpt;
+import com.topografix.gpx._1._0.ObjectFactory;
 
 /**
  * This class matches the known tracks with time stamps from images.
- * 
+ *
  * @author Andreas Schneider
- * 
+ *
  */
 public class TrackMatcher {
 	/** Number of matches performed - used for speed measurements. */
 	@SuppressWarnings("unused")
-  private int matchesPerformed = 0;
+	private int matchesPerformed = 0;
 
 	/** Total time used to match tracks - used for speed measurements. */
 	@SuppressWarnings("unused")
-  private double totalTime = 0.0;
-
-	/** We keep track of how many track segments don't need looking at. */
-	private int startIndex = 0;
+	private double totalTime = 0.0;
 
 	/**
 	 * Try and find the location given an imageInfo The imageInfo's time must
 	 * fall within a track segment.
-	 * 
+	 *
 	 * @param timeGMT
 	 *            The GMT time we try to find in the tracks
 	 * @return The best match we could find
-	 * 
+	 *
 	 */
-	public Match findMatch(Calendar timeGMT) {
+	public Match findMatch(final Calendar timeGMT) {
 		// no tracks - no can match...
 		if (!TrackStore.getTrackStore().hasTracks()) {
 			return null;
 		}
 		// for the binary search performed later we need a track point
 		// to be used as a search key
-		ObjectFactory objectFactory = new ObjectFactory();
-		Trkpt searchKey = objectFactory.createGpxTrkTrksegTrkpt();
+		final ObjectFactory objectFactory = new ObjectFactory();
+		final Trkpt searchKey = objectFactory.createGpxTrkTrksegTrkpt();
 		// this track point needs to hold the time we are looking for
 		XMLGregorianCalendar xmlTimeGMT = null;
 		try {
-			xmlTimeGMT = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-					(GregorianCalendar) timeGMT);
-		} catch (DatatypeConfigurationException e) {
+			xmlTimeGMT = DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) timeGMT);
+		} catch (final DatatypeConfigurationException e) {
 			e.printStackTrace();
 		}
 		searchKey.setTime(xmlTimeGMT);
-		long start = System.currentTimeMillis();
-		Match match = new Match();
+		final long start = System.currentTimeMillis();
+		final Match match = new Match();
 		// we keep track of the track segments closest
 		// to the image time, in case we don't find a proper interval match
 		Trkpt lastPointBefore = null;
 		Calendar lastPointBeforeTime = null;
 		Trkpt firstPointAfter = null;
 		// look at all the track segments
-		List<Trkseg> trackSegments = TrackStore.getTrackStore()
-				.getTrackSegments();
+		final List<Trkseg> trackSegments = TrackStore.getTrackStore().getTrackSegments();
 		// for (Trkseg segment : TrackStore.getTrackStore().getTrackSegments())
 		// {
-		for (int segmentIndex = startIndex; segmentIndex < trackSegments.size(); segmentIndex++) {
-			Trkseg segment = trackSegments.get(segmentIndex);
+		for (int segmentIndex = 0; segmentIndex < trackSegments.size(); segmentIndex++) {
+			final Trkseg segment = trackSegments.get(segmentIndex);
 			// retrieve the track points of this segment
-			List<Trkpt> trackPoints = segment.getTrkpt();
+			final List<Trkpt> trackPoints = segment.getTrkpt();
 
 			// first we see if our candidate lies between the first and last
 			// track point of this track segment
@@ -111,13 +106,10 @@ public class TrackMatcher {
 				// note that we already know that the point lies within the
 				// segment
 				// so the search will not return -1 or trackPoints.size()
-				int greaterOrEqual = Collections.binarySearch(trackPoints,
-						searchKey, new TrackPointComparator());
+				int greaterOrEqual = Collections.binarySearch(trackPoints, searchKey, new TrackPointComparator());
 				// first test if track point is within the segment
-				if (greaterOrEqual != -1
-						&& greaterOrEqual != -trackPoints.size() - 1) {
-					// next time round start searching from this segment
-					startIndex = segmentIndex;
+				if (greaterOrEqual != -1 && greaterOrEqual != -trackPoints.size() - 1) {
+
 					if (greaterOrEqual < 0) {
 						// search result is (-(insertion point) - 1)
 						// insertion point is defined as:
@@ -139,10 +131,10 @@ public class TrackMatcher {
 			// our image is not in this interval, or there are less than
 			// two track points in the segment
 			if (match.getMatchingSegment() == null && trackPoints.size() > 0) {
-				Trkpt startPoint = trackPoints.get(0);
-				Trkpt endPoint = trackPoints.get(trackPoints.size() - 1);
-				Calendar startTime = startPoint.getTime().toGregorianCalendar();
-				Calendar endTime = endPoint.getTime().toGregorianCalendar();
+				final Trkpt startPoint = trackPoints.get(0);
+				final Trkpt endPoint = trackPoints.get(trackPoints.size() - 1);
+				final Calendar startTime = startPoint.getTime().toGregorianCalendar();
+				final Calendar endTime = endPoint.getTime().toGregorianCalendar();
 				if (startTime.compareTo(timeGMT) >= 0) {
 					// start time is after or exactly the same as image time
 					firstPointAfter = startPoint;
@@ -154,16 +146,14 @@ public class TrackMatcher {
 				}
 				if (endTime.compareTo(timeGMT) <= 0) {
 					// end time is before or exactly the same as image time
-					if (lastPointBefore == null || lastPointBeforeTime == null
-							|| lastPointBeforeTime.before(endTime)) {
+					if (lastPointBefore == null || lastPointBeforeTime == null || lastPointBeforeTime.before(endTime)) {
 						lastPointBefore = endPoint;
 						lastPointBeforeTime = endTime;
 					}
-					startIndex = segmentIndex;
 				}
 			}
 		}
-		long end = System.currentTimeMillis();
+		final long end = System.currentTimeMillis();
 		matchesPerformed++;
 		totalTime += (end - start) / (double) Constants.ONE_SECOND_IN_MILLIS;
 		// System.out.println("This :"+(end-start)/1000.0+" Average: " +
@@ -182,69 +172,61 @@ public class TrackMatcher {
 
 	/**
 	 * Calculate the coordinates and store them.
-	 * 
+	 *
 	 * @param imageInfo
 	 *            The ImageInfo that will get new coordinates
 	 * @param match
 	 *            The match determined by the matcher
 	 */
-	public void performMatch(ImageInfo imageInfo, Match match) {
-		Trkpt startPoint = match.getPreviousPoint();
-		Trkpt endPoint = match.getNextPoint();
-		Calendar startTime = startPoint.getTime().toGregorianCalendar();
-		Calendar endTime = endPoint.getTime().toGregorianCalendar();
+	public void performMatch(final ImageInfo imageInfo, final Match match) {
+		final Trkpt startPoint = match.getPreviousPoint();
+		final Trkpt endPoint = match.getNextPoint();
+		final Calendar startTime = startPoint.getTime().toGregorianCalendar();
+		final Calendar endTime = endPoint.getTime().toGregorianCalendar();
 		// we found the two readings before and after the image was
 		// taken (or an exact match)
 		// where in the segment lies our time
-		double ratio = Util.calculateRatio(startTime.getTimeInMillis(),
-				imageInfo.getTimeGMT().getTimeInMillis(), endTime
-						.getTimeInMillis());
+		final double ratio = Util.calculateRatio(startTime.getTimeInMillis(), imageInfo.getTimeGMT().getTimeInMillis(),
+				endTime.getTimeInMillis());
 		// now we apply this ratio to interpolate the position
-		double startLatitude = startPoint.getLat().doubleValue();
-		double startLongitude = startPoint.getLon().doubleValue();
+		final double startLatitude = startPoint.getLat().doubleValue();
+		final double startLongitude = startPoint.getLon().doubleValue();
 		double startAltitude = 0.0;
 		if (startPoint.getEle() != null) {
 			startAltitude = startPoint.getEle().doubleValue();
 		}
-		double endLatitude = endPoint.getLat().doubleValue();
-		double endLongitude = endPoint.getLon().doubleValue();
+		final double endLatitude = endPoint.getLat().doubleValue();
+		final double endLongitude = endPoint.getLon().doubleValue();
 		double endAltitude = 0.0;
 		if (endPoint.getEle() != null) {
 			endAltitude = endPoint.getEle().doubleValue();
 		}
-		double latitude = Util.applyRatio(startLatitude, endLatitude, ratio);
-		double longitude = Util.applyRatio(startLongitude, endLongitude, ratio);
-		double altitude = Util.applyRatio(startAltitude, endAltitude, ratio);
+		final double latitude = Util.applyRatio(startLatitude, endLatitude, ratio);
+		final double longitude = Util.applyRatio(startLongitude, endLongitude, ratio);
+		final double altitude = Util.applyRatio(startAltitude, endAltitude, ratio);
 		// only store the result in the imageInfo if they are different
 		// from before
 		boolean update = imageInfo.getSource() != DATA_SOURCE.IMAGE;
 		if (!update) {
 			// the current coordinates come from the image
 			try {
-				double oldLatitude = Double.parseDouble(imageInfo
-						.getGpsLatitude());
-				double oldLongitude = Double.parseDouble(imageInfo
-						.getGpsLongitude());
-				double distance = Util.greatCircleDistance(latitude, longitude,
-						oldLatitude, oldLongitude);
+				final double oldLatitude = Double.parseDouble(imageInfo.getGpsLatitude());
+				final double oldLongitude = Double.parseDouble(imageInfo.getGpsLongitude());
+				final double distance = Util.greatCircleDistance(latitude, longitude, oldLatitude, oldLongitude);
 				if (distance > 1.0) {
 					// more than one meter - update is valid
 					update = true;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (final Exception e) {
 				// the new values seem better than the old ones... update
 				update = true;
 			}
 		}
 		if (update) {
-			new UpdateGPSLatitude(imageInfo, Double.toString(latitude),
-					ImageInfo.DATA_SOURCE.TRACK);
-			new UpdateGPSLongitude(imageInfo, Double.toString(longitude),
-					ImageInfo.DATA_SOURCE.TRACK);
+			new UpdateGPSLatitude(imageInfo, Double.toString(latitude), ImageInfo.DATA_SOURCE.TRACK);
+			new UpdateGPSLongitude(imageInfo, Double.toString(longitude), ImageInfo.DATA_SOURCE.TRACK);
 			// altitudes are internally stored in metres
-			new UpdateGPSAltitude(imageInfo, Double.toString(altitude),
-					ImageInfo.DATA_SOURCE.TRACK, ALTITUDE.METRES);
+			new UpdateGPSAltitude(imageInfo, Double.toString(altitude), ImageInfo.DATA_SOURCE.TRACK, ALTITUDE.METRES);
 		}
 	}
 
@@ -272,7 +254,7 @@ public class TrackMatcher {
 		 * @param matchingSegment
 		 *            the matchingSegment to set
 		 */
-		public void setMatchingSegment(Trkseg matchingSegment) {
+		public void setMatchingSegment(final Trkseg matchingSegment) {
 			this.matchingSegment = matchingSegment;
 		}
 
@@ -287,7 +269,7 @@ public class TrackMatcher {
 		 * @param previousPoint
 		 *            the previousPoint to set
 		 */
-		public void setPreviousPoint(Trkpt previousPoint) {
+		public void setPreviousPoint(final Trkpt previousPoint) {
 			this.previousPoint = previousPoint;
 		}
 
@@ -302,28 +284,28 @@ public class TrackMatcher {
 		 * @param nextPoint
 		 *            the nextPoint to set
 		 */
-		public void setNextPoint(Trkpt nextPoint) {
+		public void setNextPoint(final Trkpt nextPoint) {
 			this.nextPoint = nextPoint;
 		}
 	}
 
 	/**
 	 * Comparator for track points.
-	 * 
+	 *
 	 * @author Andreas Schneider
-	 * 
+	 *
 	 */
 	static class TrackPointComparator implements Comparator<Trkpt>, Serializable {
 		/***/
-    private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-    /**
+		/**
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		@Override
-		public int compare(Trkpt point1, Trkpt point2) {
-			Calendar time1 = point1.getTime().toGregorianCalendar();
-			Calendar time2 = point2.getTime().toGregorianCalendar();
+		public int compare(final Trkpt point1, final Trkpt point2) {
+			final Calendar time1 = point1.getTime().toGregorianCalendar();
+			final Calendar time2 = point2.getTime().toGregorianCalendar();
 			return time1.compareTo(time2);
 		}
 	}
